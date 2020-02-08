@@ -1,8 +1,11 @@
 import React from 'react';
 
+import './ControlPanel.css';
+
 function Select(props) {
   return (
-    <select name="selectedMode" className="form-control"
+    <select name={props.name}
+      className={props.class}
       value={props.value}
       onChange={props.onChange}
     >
@@ -20,7 +23,7 @@ export default function ControlPanel(props) {
   return (
     <div className="control-panel">
       <form className="form">
-        <Select
+        <Select name="selectedMode" class="form-control"
           value={props.selectedMode}
           onChange={props.handleChange}
           options={props.options}

@@ -1,8 +1,9 @@
 import React from 'react';
+import './LeaderBoard.css';
 
 export default function LeaderBoard(props) {
   return (
-    <table className="leader-board">
+    <table>
       <caption>Leader Board</caption>
       <tbody>
         {props.winners.map((winner, index) => {

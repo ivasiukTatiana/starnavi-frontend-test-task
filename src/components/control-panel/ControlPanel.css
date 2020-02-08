@@ -1,3 +1,25 @@
-/*.control-panel {
-
-}*/
+.control-panel {
+  margin: 1rem 1rem 0.8rem;
+  display: flex;
+  justify-content: space-between;
+}
+.form-control, button {
+  padding: 0.5rem;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+.form-control:hover, button:hover {
+  background-color: rgba(220, 220, 255, 1);
+}
+.form-control {
+  margin-right: 0.8rem;
+  background-color: rgba(225, 225, 255, 0.5);
+}
+button {
+  width: 8rem;
+  background-color: rgba(210, 210, 255, 0.6);
+}
+option {
+  background-color: #fff;
+  font-size: 110%;
+}

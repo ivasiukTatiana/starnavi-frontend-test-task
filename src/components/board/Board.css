@@ -1,6 +1,9 @@
 .board {
+  width: fit-content;
   display: flex;
   flex-direction: column;
+  margin: 0 auto 0.5rem;
+  border: 1px solid #808080;
 }
 .board-row {
   display: flex;

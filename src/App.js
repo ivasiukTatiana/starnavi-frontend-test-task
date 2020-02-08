@@ -11,7 +11,6 @@ const urlSettings = '/game-settings';
 const urlWinners = '/winners';
 
 export default class App extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -29,19 +28,15 @@ export default class App extends Component {
         computer: 0
       },
       squares: Array.from(Array(defaultMode.field), () => Array(defaultMode.field).fill('#fff')),
-      //squares: [],
       winners: [],
     }
 
-    //this.handleButtonClick = this.handleButtonClick.bind(this);
-    //this.changeSquareColor = this.changeSquareColor.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.changeSquareColor = this.changeSquareColor.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
   }
 
   componentDidMount() {
-    //const url = 'https://starnavi-frontend-test-task.herokuapp.com';
-    //const urlSettings = '/game-settings';
-    //const urlWinners = '/winners';
 
     fetch(url + urlSettings)
       .then(response => {
