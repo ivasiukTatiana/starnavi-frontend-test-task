@@ -3,15 +3,12 @@ import React, {Component} from 'react';
 import './App.css';
 import Board from './components/board/Board';
 import ControlPanel from './components/control-panel/ControlPanel';
+import LeaderBoard from './components/leader-board/LeaderBoard';
 
-const defaultMode = {
-  field: 5,
-  delay: 2000
-};
-
-//const url = 'https://starnavi-frontend-test-task.herokuapp.com';
-//const urlSettings = '/game-settings';
-//const urlWinners = '/winners';
+const defaultMode = {field: 5, delay: 2000};
+const url = 'https://starnavi-frontend-test-task.herokuapp.com';
+const urlSettings = '/game-settings';
+const urlWinners = '/winners';
 
 export default class App extends Component {
 
@@ -31,8 +28,9 @@ export default class App extends Component {
         user: 0,
         computer: 0
       },
-      squares: Array.from(Array(defaultMode.field), () => Array(defaultMode.field).fill('#fff'))
-      //squares: []
+      squares: Array.from(Array(defaultMode.field), () => Array(defaultMode.field).fill('#fff')),
+      //squares: [],
+      winners: [],
     }
 
     //this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -41,9 +39,9 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    const url = 'https://starnavi-frontend-test-task.herokuapp.com';
-    const urlSettings = '/game-settings';
-    const urlWinners = '/winners';
+    //const url = 'https://starnavi-frontend-test-task.herokuapp.com';
+    //const urlSettings = '/game-settings';
+    //const urlWinners = '/winners';
 
     fetch(url + urlSettings)
       .then(response => {
@@ -52,7 +50,20 @@ export default class App extends Component {
       .then(response => {
         this.setState({
           modes: response
-        })
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+      fetch(url + urlWinners)
+      .then(response => {
+        return response.json()
+      })
+      .then(response => {
+        this.setState({
+          winners: response
+        });
       })
       .catch(err => {
         console.log(err);
@@ -85,9 +96,8 @@ export default class App extends Component {
   handleButtonStart = () => {
     this.gameReset();
     let {field, delay} = this.state.mode;
-    const changeSquareColor = this.changeSquareColor;
-    const gameOver = this.gameOver;
-    //let date = new Date();
+    const changeSquareColor = this.changeSquareColor.bind(this);
+    const gameOver = this.gameOver.bind(this);
     setTimeout(function startGame() {
       let row = parseInt(Math.random() * field);
       let column = parseInt(Math.random() * field);
@@ -163,11 +173,27 @@ export default class App extends Component {
   }
 
   /**
-    * Function
+    * Function ends the game and sends the winner and date to the server
     * @param winner { number } - 1: Computer is winner | 2: User is winner
     * @return void
     */
   gameOver = (winner) => {
+    let now = Date.now();
+    let options = {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    };
+    let nowTime = new Intl.DateTimeFormat('en-US', options).format(now);
+    let nowDate = [{day: '2-digit'}, {month: 'long'}, {year: 'numeric'}].map((item) => {
+      options = item;
+      return Intl.DateTimeFormat('en-US', options).format(now);
+    }).join(' ');
+
+    const objWinner = {
+      winner: "Computer",
+      date: `${nowTime}; ${nowDate}`
+    };
     let message = {
       text: "Game over. I won!!!!!!!",
       background: "#ffb7b7"
@@ -177,12 +203,30 @@ export default class App extends Component {
         text: "Congratulations! You won!",
         background: "#b7ffb7"
       };
+      this.state.user !== "" ? objWinner.winner = this.state.user : objWinner.winner = "User";
     }
-
     this.setState({
       button: 'PLAY AGAIN',
       message: message,
     });
+
+    fetch(url + urlWinners, {
+      method: "POST",
+      body: JSON.stringify(objWinner),
+      headers: {
+        "Content-Type": "application/json"
+      }})
+      .then(response => {
+        return response.json()
+      })
+      .then(response => {
+        this.setState({
+          winners: response
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
   /**
@@ -208,26 +252,26 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-
-        <ControlPanel
-          onClick={this.handleButtonStart}
-          handleChange={this.handleFormChange}
-          options={Object.keys(this.state.modes)}
-          selectedMode={this.state.selectedMode}
-          user={this.state.user}
-          button={this.state.button}
-        />
-
-        <p className="message"
-          style={this.state.message.text !== '' ? {opacity: 1, backgroundColor: this.state.message.background} : {opacity: 0}}
-        >
-          {this.state.message.text}
-        </p>
-
-        <Board
-          squares={this.state.squares}
-          onClick={(i, j) => this.handleBoardClick(i, j)}
-        />
+        <div>
+          <ControlPanel
+            onClick={this.handleButtonStart}
+            handleChange={this.handleFormChange}
+            options={Object.keys(this.state.modes)}
+            selectedMode={this.state.selectedMode}
+            user={this.state.user}
+            button={this.state.button}
+          />
+          <p className="message"
+            style={this.state.message.text !== '' ? {opacity: 1, backgroundColor: this.state.message.background} : {opacity: 0}}
+          >
+            {this.state.message.text}
+          </p>
+          <Board
+            squares={this.state.squares}
+            onClick={(i, j) => this.handleBoardClick(i, j)}
+          />
+        </div>
+        <LeaderBoard winners={this.state.winners} />
       </div>
     );
   }

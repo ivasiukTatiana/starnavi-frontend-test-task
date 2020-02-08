@@ -1,6 +1,17 @@
+.App {
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+}
 .message {
-  color: #fff;
-  font-size: 2rem;
+  margin: 0.1rem auto;
+  padding: 0.2rem;
   height: 2.2rem;
-  transition: all 0.6s ease-in-out;
+  width: 60%;
+  text-align: center;
+  color: #555;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  text-shadow: -1px 1px 2px #000038;
+  transition: all 0.8s ease-in-out;
 }
