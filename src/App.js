@@ -31,7 +31,7 @@ export default class App extends Component {
       winners: [],
     }
 
-    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleBoardClick = this.handleBoardClick.bind(this);
     this.changeSquareColor = this.changeSquareColor.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
   }
