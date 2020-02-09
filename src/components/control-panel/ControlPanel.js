@@ -12,7 +12,7 @@ function Select(props) {
       <option disabled hidden>Pick game mode</option>
       {props.options.map((option, index) => {
         return (
-          <option key={index} value={option}>{option}</option>
+          <option key={index} value={option}>{option.slice(0, option.length - 4)}</option>
         )
       })}
     </select>

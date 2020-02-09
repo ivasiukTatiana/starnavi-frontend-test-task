@@ -1,4 +1,5 @@
 table {
+  width: 100%;
   margin-left: 1rem;
   margin-bottom: 1rem;
   border-collapse: collapse;
@@ -8,7 +9,6 @@ caption{
   font-size: 1.6rem;
 }
 tbody {
-  width: 95%;
   height: 85vh;
   display: block;
   overflow-y: auto;
@@ -28,6 +28,6 @@ tbody:nth-child(even) tr:nth-child(odd) {
   background-color: rgba(225, 225, 255, 0.5);
 }
 td {
-  padding: 0.2rem 0.5rem;
-  width: 50%;
+  padding: 0.5rem;
+  width: fit-content;
 }

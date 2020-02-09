@@ -250,9 +250,7 @@ export default class App extends Component {
           <ControlPanel
             onClick={this.handleButtonStart}
             handleChange={this.handleFormChange}
-            options={Object.keys(this.state.modes).map((item) => {
-              return item.slice(0, item.length - 4);
-            })}
+            options={Object.keys(this.state.modes)}
             selectedMode={this.state.selectedMode}
             user={this.state.user}
             button={this.state.button}
@@ -267,7 +265,10 @@ export default class App extends Component {
             onClick={(i, j) => this.handleBoardClick(i, j)}
           />
         </div>
-        <LeaderBoard winners={this.state.winners} />
+        <div>
+          <LeaderBoard winners={this.state.winners} />
+        </div>
+
       </div>
     );
   }
