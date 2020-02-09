@@ -21,23 +21,21 @@ function Select(props) {
 
 export default function ControlPanel(props) {
   return (
-    <div className="control-panel">
-      <form className="form">
-        <Select name="selectedMode" class="form-control"
-          value={props.selectedMode}
-          onChange={props.handleChange}
-          options={props.options}
-        />
-        <input type="text" name="user" className="form-control"
-          value={props.user}
-          onChange={props.handleChange}
-          placeholder="Enter your name"
-          autoFocus
-        />
-        <button type="button" onClick={props.onClick}>
-          {props.button}
-        </button>
-      </form>
-    </div>
+    <form>
+      <Select name="selectedMode" class="form-control"
+        value={props.selectedMode}
+        onChange={props.handleChange}
+        options={props.options}
+      />
+      <input type="text" name="user" className="form-control"
+        value={props.user}
+        onChange={props.handleChange}
+        placeholder="Enter your name"
+        autoFocus
+      />
+      <button type="button" onClick={props.onClick}>
+        {props.button}
+      </button>
+    </form>
   )
 }

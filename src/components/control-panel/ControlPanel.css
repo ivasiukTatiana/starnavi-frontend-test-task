@@ -1,7 +1,8 @@
-.control-panel {
+form {
   margin: 1rem 1rem 0.8rem;
   display: flex;
   justify-content: space-between;
+  flex-wrap: nowrap;
 }
 .form-control, button {
   padding: 0.5rem;

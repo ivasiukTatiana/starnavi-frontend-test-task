@@ -37,7 +37,6 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-
     fetch(url + urlSettings)
       .then(response => {
         return response.json()
@@ -251,7 +250,9 @@ export default class App extends Component {
           <ControlPanel
             onClick={this.handleButtonStart}
             handleChange={this.handleFormChange}
-            options={Object.keys(this.state.modes)}
+            options={Object.keys(this.state.modes).map((item) => {
+              return item.slice(0, item.length - 4);
+            })}
             selectedMode={this.state.selectedMode}
             user={this.state.user}
             button={this.state.button}
