@@ -31,32 +31,31 @@ export default class App extends Component {
       winners: [],
     }
 
+    this.getData = this.getData.bind(this);
     this.handleBoardClick = this.handleBoardClick.bind(this);
     this.changeSquareColor = this.changeSquareColor.bind(this);
     this.handleFormChange = this.handleFormChange.bind(this);
   }
 
   componentDidMount() {
-    fetch(url + urlSettings)
-      .then(response => {
-        return response.json()
-      })
-      .then(response => {
-        this.setState({
-          modes: response
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      })
+    this.getData(url + urlSettings, 'modes');
+    this.getData(url + urlWinners, 'winners');
+  }
 
-      fetch(url + urlWinners)
+  /**
+  * Method gets data from the server and sets them to the state
+  * @param endpoint { string } - endpoint
+  * @param nameProperty { string } - property name
+  * @return void
+  */
+  getData(endpoint, nameProperty) {
+    fetch(endpoint)
       .then(response => {
         return response.json()
       })
       .then(response => {
         this.setState({
-          winners: response
+          [nameProperty]: response
         });
       })
       .catch(err => {
