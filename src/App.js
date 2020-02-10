@@ -178,11 +178,13 @@ export default class App extends Component {
       minute: '2-digit',
       hour12: false,
     };
-    let nowTime = new Intl.DateTimeFormat('en-US', options).format(now);
-    let nowDate = [{day: '2-digit'}, {month: 'long'}, {year: 'numeric'}].map((item) => {
-      options = item;
-      return Intl.DateTimeFormat('en-US', options).format(now);
-    }).join(' ');
+    let nowTime = new Intl.DateTimeFormat('en-GB', options).format(now);
+    options = {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
+    };
+    let nowDate = new Intl.DateTimeFormat('en-GB', options).format(now);
 
     const objWinner = {
       winner: "Computer",
