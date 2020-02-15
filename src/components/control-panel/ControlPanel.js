@@ -27,7 +27,8 @@ export default function ControlPanel(props) {
         onChange={props.handleChange}
         options={props.options}
       />
-      <input type="text" name="user" className="form-control"
+      <input type="text" name="user" maxLength="20"
+        className="form-control"
         value={props.user}
         onChange={props.handleChange}
         placeholder="Enter your name"
